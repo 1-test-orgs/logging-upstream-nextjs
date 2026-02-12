@@ -21,8 +21,8 @@ export async function GET(request: NextRequest) {
         pathname: request.nextUrl.pathname,
         searchParams: Object.fromEntries(request.nextUrl.searchParams.entries()),
       },
-      geo: request.geo,
-      ip: request.ip,
+      geo: (request as unknown as { geo?: unknown }).geo,
+      ip: request.headers.get('x-forwarded-for'),
       timestamp: new Date().toISOString(),
     });
   }
